@@ -72,7 +72,6 @@ img{
     font-size: 20px;
     font-weight: 700;
     line-height: normal;
-    padding-left: 3%;
 }
 
 .texto{
@@ -97,8 +96,6 @@ img{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-left: 10%;
-    padding-right: 10%;
 }
 
 
@@ -107,12 +104,13 @@ img{
 }
 
 .div-linguagens{
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .card-linguagem{
-    margin: 15%; 
+    margin: 5%; 
     max-width: 260px;
 }
 
@@ -121,10 +119,9 @@ img{
         margin: 10px;
     }
 
-    .div-linguagens{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .card-linguagem{
+        margin: 5%; 
+        max-width: 260px;
     }
 
     .titulo{
@@ -142,5 +139,12 @@ img{
         font-family: 'Bungee';
         align-items: center;
         justify-content: center;
+    }  
+}
+
+@media only screen and (min-width: 768px){
+    .card-linguagem{
+        margin: 1%; 
+        max-width: 260px;
     }
 }
