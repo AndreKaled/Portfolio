@@ -96,8 +96,15 @@ img{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 100px;
 }
 
+.div-techs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
 .texto-projeto{
     color:black;
