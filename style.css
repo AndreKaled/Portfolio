@@ -13,6 +13,19 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+body::-webkit-scrollbar {
+    width: 5px;
+}
+  
+body::-webkit-scrollbar-track {
+    background: none;
+}
+  
+body::-webkit-scrollbar-thumb {
+    background-color: #4185f2;
+}
+
 .div-eu{
     display: flex;
     flex-direction: column;
@@ -57,7 +70,7 @@ img{
 
 .img-eu{
     border: 0.2em solid #4185f2;
-    border-radius: 25%;
+    border-radius: 20%;
 }
 
 .titulo{
