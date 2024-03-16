@@ -166,9 +166,7 @@ p{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
-    
 }
 .div-techs-front img{
     float: right;
@@ -188,55 +186,79 @@ p{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
 }
 .div-tech-back{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
 }
 
 .div-tech-experiencias{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
 }
 
 .techs-experiencias{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
 }
 
 .center{
     align-items: center;
     justify-content: center;
-    
 }
 
-@keyframes andar {
-    0% {
-      transform: translateX(30vw);
+@keyframes andarFront {
+    from{
+      transform: translateX(0);
     }
     
-    100% {
-      transform: translateX(-30vw);
+    to{
+      transform: translateX(-940px);
     }
   }
   
+  @keyframes andarExperiencia {
+    from{
+      transform: translateX(0);
+    }
+    
+    to{
+      transform: translateX(-970px);
+    }
+  }
+
+  @keyframes andarBack {
+    from{
+      transform: translateX(0);
+    }
+    
+    to{
+      transform: translateX(-840px);
+    }
+  }
+  @keyframes andarBackLine2 {
+    from{
+      transform: translateX(0);
+    }
+    
+    to{
+      transform: translateX(-540px);
+    }
+  }
+
   .div-techs-back div {
-    animation: andar 10s alternate infinite;
+    animation: andarBack 5s linear infinite;
   }
 
   .techs-experiencias img{
-    animation: andar 10s alternate infinite;
+    animation: andarExperiencia 5s linear infinite;
   }
   .div-techs-front img {
-    animation: andar 10s alternate infinite; /* Aplicar a animação às imagens */
+    animation: andarFront 5s linear infinite; /* Aplicar a animação às imagens */
   }
 
 @media (max-width: 500px) {
@@ -245,12 +267,12 @@ p{
     }
   
     @keyframes andar {
-        0% {
-          transform: translateX(80vw);
+        from {
+          transform: translateX(0);
         }
         
-        100% {
-          transform: translateX(-80vw);
+        to {
+          transform: translateX(-1180px);
         }
       }
 
