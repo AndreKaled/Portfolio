@@ -229,14 +229,14 @@ p{
   }
   
   .div-techs-back div {
-    animation: andar 6s alternate infinite;
+    animation: andar 10s alternate infinite;
   }
 
   .techs-experiencias img{
-    animation: andar 6s alternate infinite;
+    animation: andar 10s alternate infinite;
   }
   .div-techs-front img {
-    animation: andar 6s alternate infinite; /* Aplicar a animação às imagens */
+    animation: andar 10s alternate infinite; /* Aplicar a animação às imagens */
   }
 
 @media (max-width: 500px) {
@@ -246,11 +246,11 @@ p{
   
     @keyframes andar {
         0% {
-          transform: translateX(60vw);
+          transform: translateX(80vw);
         }
         
         100% {
-          transform: translateX(-60vw);
+          transform: translateX(-80vw);
         }
       }
 
