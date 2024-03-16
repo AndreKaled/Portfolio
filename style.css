@@ -144,7 +144,7 @@ p{
 
 .div-center{
     display: flex;
-    flex-direction: column;
+    flex-direction: initial;
     align-items: center;
     justify-content: center;
 }
@@ -157,11 +157,103 @@ p{
     font-family: 'Bungee';
 }
 
+.div-tech-front{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.div-techs-front{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    
+}
+.div-techs-front img{
+    float: right;
+}
+
+.div-techs-back{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.div-techs-back img{
+    float: right;
+}
+
+.techs-back{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.div-tech-back{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.div-tech-experiencias{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.techs-experiencias{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.center{
+    align-items: center;
+    justify-content: center;
+    
+}
+
+@keyframes andar {
+    0% {
+      transform: translateX(30vw);
+    }
+    
+    100% {
+      transform: translateX(-30vw);
+    }
+  }
+  
+  .div-techs-back div {
+    animation: andar 6s alternate infinite;
+  }
+
+  .techs-experiencias img{
+    animation: andar 6s alternate infinite;
+  }
+  .div-techs-front img {
+    animation: andar 6s alternate infinite; /* Aplicar a animação às imagens */
+  }
+
 @media (max-width: 500px) {
     body{
         margin-top: 30px;
     }
-    
+  
+    @keyframes andar {
+        0% {
+          transform: translateX(60vw);
+        }
+        
+        100% {
+          transform: translateX(-60vw);
+        }
+      }
+
     .div-whats{
         display: grid;
         grid-template-columns: 1fr 1fr;
