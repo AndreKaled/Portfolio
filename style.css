@@ -251,14 +251,14 @@ p{
   }
 
   .div-techs-back div {
-    animation: andarBack 5s linear infinite;
+    animation: andarBack 7s linear infinite;
   }
 
   .techs-experiencias img{
-    animation: andarExperiencia 5s linear infinite;
+    animation: andarExperiencia 7s linear infinite;
   }
   .div-techs-front img {
-    animation: andarFront 5s linear infinite; /* Aplicar a animação às imagens */
+    animation: andarFront 7s linear infinite; /* Aplicar a animação às imagens */
   }
 
 @media (max-width: 500px) {
