@@ -68,7 +68,7 @@
 						disponível para Android 10 ou superior. Há também para uso na web com versão 
 						de teste da funcionalidade de Flashcards, juntamente com a apresentação do 
 						app.</p>
-					<p class="card-text"><small class="text-muted">Última vez atualizado em Nov. de 2023.</small></p>
+					<p class="card-text"><small id="projeto_1" class="text-muted"></small></p>
 				</div>
 				<img src="images/helpstudy.png" class="card-img-bottom" alt="Projeto helpstudy">
 				<footer class="card-footer">
@@ -88,7 +88,7 @@
 					meus colegas de turma do IFAM.</p>
 					<p class="card-text texto-projeto">Realizado em HTML, CSS e Javascript, junto com o framework
 						 Bootstrap, a API do Firebase Firestore e Firebase Storage.</p>
-					<p class="card-text"><small class="text-muted">Última vez atualizado em Dez. de 2023.</small></p>
+					<p class="card-text"><small id="projeto_2" class="text-muted"></small></p>
 				</div>
 				<img src="images/lunodex.png" class="card-img-bottom" alt="Projeto Lunodex">
 				<footer class="card-footer">
@@ -105,13 +105,44 @@
 					a Objetos com Java. Tinha como objetivo principal aplicar os conceitos aprendidos,
 					e ao mesmo tempo desenvolver conhecimentos de Scrum e Kanban com minha equipe de desenvolvimento.</p>
 					<p class="card-text texto-projeto">O projeto foi feito em Java, com JDBC, MySQL e a biblioteca Swing.</p>
-					<p class="card-text"><small class="text-muted">Última vez atualizado em Dez. de 2022.</small></p>
+					<p class="card-text"><small id="projeto_3" class="text-muted"></small></p>
 				</div>
 				<img src="images/dindin.png" class="card-img-bottom" alt="Projeto Dindin">
 				<footer class="card-footer">
 					<a target="_blank" href="https://github.com/AndreKaled/Dindin">Github</a>
 				</footer>
 			</div>
+
+			<script>
+				async function fetchLastCommitDate(repoURL,num) {
+					try {
+						const response = await fetch(repoURL, {
+							headers: { 'Accept': 'application/vnd.github.v3+json' }
+						});
+						const commits = await response.json();
+						const dataCommit = commits[0].commit.committer.date;
+						document.getElementById("projeto_" +num).innerHTML = "Última vez atualizado em " + dataFormatada(dataCommit) +".";
+					} catch (error) {
+						console.error('Erro ao obter a data do último commit:', error);
+						document.getElementById("projeto_" +num).innerHTML = "Erro ao obter a data do último commit.";
+					}
+				}
+
+				function dataFormatada(dataArg){
+				var data = new Date(dataArg),
+						dia  = data.getDate().toString(),
+						diaF = (dia.length == 1) ? '0'+dia : dia,
+						mes  = (data.getMonth()+1).toString(),
+						mesF = (mes.length == 1) ? '0'+mes : mes,
+						anoF = data.getFullYear();
+				return diaF+"/"+mesF+"/"+anoF;
+				}
+			
+				// Chamada a função para atualizar a data
+				fetchLastCommitDate("https://api.github.com/repos/AndreKaled/HelpStudy/commits",1);
+				fetchLastCommitDate("https://api.github.com/repos/AndreKaled/Luno-Dex/commits",2);
+				fetchLastCommitDate("https://api.github.com/repos/AndreKaled/Dindin/commits",3);
+			</script>
 	</section>
 
 	<section id="tech" class="div-techs">
