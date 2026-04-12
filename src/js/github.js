@@ -72,7 +72,10 @@ async function fetchGitHubEvents() {
         const filteredEvents = events.filter(event => {
             if (event.type === 'PushEvent') {
                 const commits = event.payload.commits;
-                return commits && commits.length > 0 && commits[0].message.trim().length > 0;
+                if (commits && commits.length > 0) {
+                    return commits[0].message.trim().length > 0;
+                }
+                return true;
             }
             return true; 
         });
@@ -84,9 +87,11 @@ async function fetchGitHubEvents() {
             switch(event.type) {
                 case 'PushEvent':
                     const commits = event.payload.commits;
+                    const headHash = event.payload.head ? event.payload.head.substring(0, 7) : 'unknown';
+                    
                     const commitMsg = (commits && commits.length > 0) 
                         ? commits[0].message 
-                        : 'Push integration (no commit msg)';
+                        : `Pushed new changes [head: ${headHash}]`;
                     
                     actionText = `<span class="event-type push">[PUSH]</span> ${commitMsg} in <strong>${event.repo.name}</strong>`;
                     break;
