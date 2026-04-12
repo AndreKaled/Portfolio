@@ -59,10 +59,29 @@ nav a {
     margin-left: 2rem;
     font-size: 1rem;
     font-weight: 500;
-    transition: color 0.2s;
+    transition: color 0.2s ease;
+    position: relative;
 }
 
 nav a:hover { color: var(--accent); }
+
+nav a.active {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--accent);
+}
 
 /* Common Components */
 .card {
@@ -73,6 +92,12 @@ nav a:hover { color: var(--accent); }
     display: flex;
     flex-direction: column;
     transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    border-color: #b0b0b0; 
+    box-shadow: 0 0 0 1px #b0b0b0;
+    transform: translateY(-2px);
 }
 
 .card.compact { padding: 1.5rem; min-height: auto; }
