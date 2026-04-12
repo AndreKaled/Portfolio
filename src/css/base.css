@@ -1,0 +1,93 @@
+:root {
+    --bg: #fafafa;
+    --card-bg: #ffffff;
+    --text: #111111;
+    --subtle: #666666;
+    --border: #eaeaea;
+    --accent: #0070f3;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Geist Sans', -apple-system, sans-serif;
+    margin: 0;
+    padding: 4rem 10%;
+    line-height: 1.5;
+}
+
+[hidden] { display: none !important; }
+
+/* Header & Nav */
+.lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5rem;
+}
+
+.lab-header h1 { 
+    font-size: 2.2rem;
+    letter-spacing: -0.02em;
+    margin: 0; 
+    font-weight: 800; 
+}
+
+.status-pill {
+    font-size: 0.9rem;
+    color: var(--subtle);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+}
+
+.dot {
+    width: 10px; height: 10px;
+    background-color: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--subtle);
+    margin-left: 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+nav a:hover { color: var(--accent); }
+
+/* Common Components */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card.compact { padding: 1.5rem; min-height: auto; }
+
+.label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--subtle);
+    margin-bottom: 2rem;
+    display: block;
+    opacity: 0.7;
+}
+
+.btn-minimal {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    margin-top: auto;
+}

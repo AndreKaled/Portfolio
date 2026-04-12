@@ -1,290 +1,136 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dev. André Kaled</title>
-	<link rel="icon" href="images/github.png">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-	<link rel="Stylesheet" type="text/css" href="style.css">
-	<script src="https://kit.fontawesome.com/e61906304e.js" crossorigin="anonymous"></script></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>André Kaled — Software Developer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.min.css">
+    <!-- 
+		<link rel="stylesheet" href="src/css/main.css">
+	-->
+
+	<link rel="stylesheet" href="src/css/base.css">
+	<link rel="stylesheet" href="src/css/dashboard.css">
+	<link rel="stylesheet" href="src/css/terminal.css">
+	<link rel="stylesheet" href="src/css/logs.css">
+</head>
 <body>
-	<header>
-		<nav class="navbar navbar-dark bg-dark fixed-top">
-			<div class="container-fluid">
-			  <a class="navbar-brand" href="index.html">André Kaled</a>
-			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			  </button>
-			  <div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-				  <li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="#sobre">Sobre</a>
-				  </li>
-				  <li class="nav-item">
-					<a class="nav-link" href="#projetos">Projetos</a>
-				  </li>
-				  <li class="nav-item">
-					<a class="nav-link" href="#tech">Tecnologias</a>
-				  </li>
-				  <li class="nav-item">
-					<a class="nav-link" href="#contato">Contato</a>
-				  </li>
+
+    <header class="lab-header">
+        <div class="header-info">
+            <h1>André Kaled</h1>
+            <p class="status-pill"><span class="dot"></span> Ativo na UFAM / Desenvolvedor</p>
+        </div>
+        <nav>
+            <a href="#" onclick="showView('dashboard')">Projetos</a>
+            <a href="#lab" onclick="showView('logs')">Lab-Feed</a>
+            <a href="#contact">Contato</a>
+        </nav>
+    </header>
+
+	<main id="view-dashboard">
+		<div class="bento-grid">
+			<section class="card profile-info">
+				<span class="label">01 // Resumo</span>
+				<p class="bio-text">
+					Cientista da computação na <strong>UFAM</strong>. Projetando softwares que <strong>automatizam</strong> o esforço humano.
+				</p>
+			</section>
+
+			<section class="card tech-status">
+				<span class="label">02 // Specs</span>
+				<ul class="status-list">
+					<li><strong>Formação</strong> Graduando UFAM</li>
+					<li><strong>Atuação</strong> Software Engineer</li>
+					<li><strong>Local</strong> Manaus, AM</li>
 				</ul>
-			  </div>
-			</div>
-		  </nav>
-	</header>
+			</section>
 
-	<section>
-		<div class="div-eu">
-			<label class="titulo">André Kaled</label>
-			<img class="img-eu" src="images/DreLindo.jpg" alt="Eu, André">				
-			<img src="https://readme-typing-svg.demolab.com?font=Bungee&duration=2000&pause=1000&background=EE44FF00&center=true&random=false&width=320&height=100&separator=%3F&lines=Programador%3FDev+FullStack%3F%3CFrontEnd+HTML+%2F%3E%3F%3CFrontEnd+CSS+%2F%3E%3F%3CFrontEnd+JavaScript+%2F%3E%3FBackEnd.add(+Java+);%3FBackEnd.add(+PHP+);%3FBackEnd.add(+C+);%3FBackEnd.add(+SQL+);%3FFrameworks+%3D+%7B+Hibernate+%7D%3FFrameworks+%3D+%7B+Spring+%7D%3FFramework%3D%7BReact+Native%7D%3FFrameworks+%3D+%7B+JPA+%7D" alt="Typing SVG" />		<div id="sobre" class="div-texto-sobre-mim">
+			<section id="featured" class="card featured-project">
+				<span class="label">03 // Flagship_Project</span>
+				<h2>Sentinel-DO</h2>
+				<p>Motor de monitoramento inteligente para o Diário Oficial do Amazonas.</p>
+				<div class="tech-tags">
+					<span>Python</span>
+					<span>Automation</span>
+					<span>OSINT</span>
+				</div>
+				<a href="https://github.com/AndreKaled/sentinel-do" class="btn-minimal">Explorar Documentação →</a>
+			</section>
+
+			<section id="lab" class="card lab-feed">
+				<div class="terminal-header">
+					<div class="terminal-buttons">
+						<span class="term-dot close"></span>
+						<span class="term-dot min"></span>
+						<span class="term-dot max"></span>
+					</div>
+					<div class="terminal-title">andre@andre-Aspire-A515-57: ~</div>
+				</div>
+				
+				<div id="github-feed">
+					<div class="term-line">
+						<div class="segment seg-user">andre</div>
+						<div class="segment seg-path">~/projects</div>
+						<span class="term-cmd">ls -l</span>
+					</div>
+
+					<div id="repo-list-container">
+					</div>
+
+					<div class="term-line" style="margin-top: 20px;">
+						<div class="segment seg-user">andre</div>
+						<div class="segment seg-path">~/projects</div>
+						<span class="term-cmd">cd </span><span class="cursor"></span>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+
+	<main id="view-logs" hidden>
+		<div class="logs-stats-grid">
 			
-			<div class="div-sobre-mim anime">
-				<label class="titulo">Sobre mim</label>
-			<p class="texto">Sou um desenvolvedor em início de carreira curso, Ciência da Computação na UFAM. 
-				Possuo um curso técnico em informática pelo IFAM e estou em busca de meu primeiro emprego. 
-				Sou proativo e dedicado, com uma forte paixão por tecnologia e informação.</p>
-			<p class="texto">Sempre curioso para aprender coisas novas. Sou um autodidata de nascença, sempre disposto a ajudar e aprender com os outros.</p>
+			<section class="card compact">
+				<span class="label">Competitive Programming</span>
+				<div class="leetcode-box" style="border: none; padding: 0;">
+					<img src="https://leetcard.jacoblin.cool/AndreKaled?theme=dark&font=Geist%20Mono" 
+						alt="LeetCode Stats" 
+						style="width: 100%; border-radius: 8px; filter: saturate(0.9);" />
+				</div>
+			</section>
+
+			<section class="card compact">
+				<span class="label">Contributions</span>
+				<div class="matrix-container" style="padding: 0; text-align: center;">
+					<img src="https://ghchart.rshah.org/238636/AndreKaled" 
+						alt="GitHub Contribution Grid" 
+						style="filter: saturate(1.2);" />
+				</div>
+			</section>
+
+		</div>
+
+		<section class="card full-width" style="min-height: 40vh;">
+			<span class="label">System_Journal_Audit</span>
+			<div id="events-feed"></div>
+			<button class="btn-minimal" onclick="showView('dashboard')" style="margin-top: 2rem;">
+				Retornar ao Dashboard
+			</button>
+		</section>
+
+		<section class="card full-width compact" style="margin-top: 1.5rem;">
+			<span class="label">System_Resource_Usage (Languages)</span>
+			<div id="languages-analysis">
+				<div class="lang-progress-bar" id="global-lang-bar">
+					</div>
+				<div class="lang-legend-grid" id="global-lang-legend">
+					</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</main>
 
-	<section id="projetos" class="div-projetos anime">
-		<label class="titulo">Alguns projetos</label>
-		<div class="card bg-light anime" style="max-width: 800px;min-width: 300px;">
-				<div class="card-header">
-					<h5 class="card-title texto-projeto text-center subtitulo">HelpStudy - Android & Web</h5>
-				</div>
-				<div class="card-body">
-				<p class="card-text texto-projeto">É um aplicativo voltado para estudos, auxiliando 
-					o estudante/usuário através de métodos de estudos conhecidos, como o Pomodoro 
-					e o método de Flashcards, pontos fortes do aplicativo.</p>
-					<p class="card-text texto-projeto">Produzido com Java, SQLite e Firebase. O app está 
-						disponível para Android 10 ou superior. Há também para uso na web com versão 
-						de teste da funcionalidade de Flashcards, juntamente com a apresentação do 
-						app.</p>
-					<p class="card-text"><small id="projeto_1" class="text-muted"></small></p>
-				</div>
-				<img src="images/helpstudy.png" class="card-img-bottom" alt="Projeto helpstudy">
-				<footer class="card-footer">
-					<a href="https://github.com/AndreKaled/HelpStudy">Github</a>
-					<a href="https://github.com/AndreKaled/HelpStudy/releases/download/V1.23/app-release.apk">Download</a>
-					<a href="https://help-study.vercel.app/">Website</a>
-				</footer>
-			</div>
-
-			<div class="card bg-light anime" style="margin-top: 25px;max-width: 800px;min-width: 300px;">
-				<div class="card-header">
-					<h5 class="card-title texto-projeto text-center subtitulo">Lunodex - Web</h5>
-				</div>
-				<div class="card-body">
-					<p class="card-text texto-projeto">É um projeto web com a junção de um projeto do Bootcamp 
-					do Ifood, minha vontade de aprender Bootstrap e um meio de criar memórias dos 
-					meus colegas de turma do IFAM.</p>
-					<p class="card-text texto-projeto">Realizado em HTML, CSS e Javascript, junto com o framework
-						 Bootstrap, a API do Firebase Firestore e Firebase Storage.</p>
-					<p class="card-text"><small id="projeto_2" class="text-muted"></small></p>
-				</div>
-				<img src="images/lunodex.png" class="card-img-bottom" alt="Projeto Lunodex">
-				<footer class="card-footer">
-					<a target="_blank" href="https://github.com/AndreKaled/Luno-Dex">Github</a>
-					<a target="_blank" href="https://luno-dex.vercel.app">Website</a>
-				</footer>
-				</div>
-
-			<div class="card bg-light anime" style="margin-top: 25px;max-width: 800px;min-width: 300px;">
-				<div class="card-header">
-					<h5 class="card-title texto-projeto text-center subtitulo">Dindin - Desktop</h5>
-				</div><div class="card-body">
-					<p class="card-text texto-projeto">Dindin é um projeto desktop feito enquanto aprendia sobre Orientação
-					a Objetos com Java. Tinha como objetivo principal aplicar os conceitos aprendidos,
-					e ao mesmo tempo desenvolver conhecimentos de Scrum e Kanban com minha equipe de desenvolvimento.</p>
-					<p class="card-text texto-projeto">O projeto foi feito em Java, com JDBC, MySQL e a biblioteca Swing.</p>
-					<p class="card-text"><small id="projeto_3" class="text-muted"></small></p>
-				</div>
-				<img src="images/dindin.png" class="card-img-bottom" alt="Projeto Dindin">
-				<footer class="card-footer">
-					<a target="_blank" href="https://github.com/AndreKaled/Dindin">Github</a>
-				</footer>
-			</div>
-
-			<script>
-				async function fetchLastCommitDate(repoURL,num) {
-					try {
-						const response = await fetch(repoURL, {
-							headers: { 'Accept': 'application/vnd.github.v3+json' }
-						});
-						const commits = await response.json();
-						const dataCommit = commits[0].commit.committer.date;
-						document.getElementById("projeto_" +num).innerHTML = "Última vez atualizado em " + dataFormatada(dataCommit) +".";
-					} catch (error) {
-						console.error('Erro ao obter a data do último commit:', error);
-						document.getElementById("projeto_" +num).innerHTML = "Erro ao obter a data do último commit.";
-					}
-				}
-
-				function dataFormatada(dataArg){
-				var data = new Date(dataArg),
-						dia  = data.getDate().toString(),
-						diaF = (dia.length == 1) ? '0'+dia : dia,
-						mes  = (data.getMonth()+1).toString(),
-						mesF = (mes.length == 1) ? '0'+mes : mes,
-						anoF = data.getFullYear();
-				return diaF+"/"+mesF+"/"+anoF;
-				}
-			
-				// Chamada a função para atualizar a data
-				fetchLastCommitDate("https://api.github.com/repos/AndreKaled/HelpStudy/commits",1);
-				fetchLastCommitDate("https://api.github.com/repos/AndreKaled/Luno-Dex/commits",2);
-				fetchLastCommitDate("https://api.github.com/repos/AndreKaled/Dindin/commits",3);
-			</script>
-	</section>
-
-	<section id="tech" class="div-techs">
-		<label class="titulo">Tecnologias</label>
-	</section>
-
-<section class="center">
-	<section class="div-tech-front">
-		<label class="subtitulo">Precisando de front-end?</label>
-	</section>
-
-	<section class="div-techs-front">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="react native">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="bootstrap">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="javascript">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="html 5">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="css 3">
-	
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="react native">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="bootstrap">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="javascript">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="html 5">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="css 3">
-		
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="react native">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="bootstrap">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="javascript">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="html 5">
-		<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="css 3">
-	</section>
-
-	<section class="div-tech-back center">
-		<label class="subtitulo">Precisando de back-end?</label>
-	</section>
-
-	<section class="div-techs-back">
-		<div class="techs-back">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white" alt="Git">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white" alt="Spring">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">	
-		
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white" alt="Git">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white" alt="Spring">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">	
-
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white" alt="Git">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white" alt="Spring">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">	
-		</div>
-		<div class="techs-back" style="animation: andarBackLine2 5s linear infinite;;">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white" alt="C">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
-		
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white" alt="C">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
-			
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white" alt="C">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
-
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white" alt="C">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
-		</div>
-		
-	</section>
-
-
-	<section class="div-tech-experiencias center">
-		<label class="subtitulo">Também tive breve experiência em...</label>
-	</section>
-
-	<section class="div-techs-experiencias center">
-		<div class="techs-experiencias">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React Native">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white" alt="Firebase">
-			
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React Native">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white" alt="Firebase">
-
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React Native">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
-			<img style="margin: 15px; height: 40px;" src="https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white" alt="Firebase">
-		</div>
-	</section>
-</section>
-
-	<section class="div-whats anime" id="contato">
-		<h5 class="texto-trocar-ideia">Ei, quer trocar uma <span class="texto-trocar-ideia" id="ideia">ideia</span> comigo?</h5>
-		<div class="div-center">
-			<a target="_blank" href="https://wa.me/+5592994392152"><button type="button" class="btn btn-success" style="min-width: 100px;max-width: 250px;">Conversar agora comigo! <i class="fa-brands fa-whatsapp fa-2xl" style="color: #fff; margin: 10px;"></i></button>
-		</div>
-	</section>
-
-	<hr>
-	<section class="anime">
-		<div align="center">
-			<img width='49%' height=200px src='https://github-readme-stats.vercel.app/api?username=AndreKaled&show_icons=false&theme=tokyonight&locale=pt-br&include_all_commits=true'>
-			<img width='41%' height=200px src='https://github-readme-stats.vercel.app/api/top-langs/?username=AndreKaled&layout=compact&theme=tokyonight&locale=pt-br'>
-			<p></p>
-			<img width='100%' height=200px src='https://streak-stats.demolab.com?user=AndreKaled&theme=tokyonight'>
-		</div>
-	</section>
-
-	<nav class="navbar navbar-dark bg-dark fixed-bottom">
-		<label>Contate-me!</label>
-		<div class="div-contatos">
-			<a target="_blank" href="mailto:andrekaled9@gmail.com"><img class="icone" src="images/email.png"></a>
-			<a target="_blank" href="https://www.instagram.com/andre.kaled/"><img class="icone" src="images/instagram.png"></a>
-			<a target="_blank" href="https://www.linkedin.com/in/andr%C3%A9-kaled"><img class="icone" src="images/linkedin.png"></a>
-			<a target="_blank" href="https://github.com/AndreKaled"><img class="icone" src="images/github.png"></a>			
-		</div>
-	</nav>
-
-	<br><br><br>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="src/js/github.js"></script>
+    <script src="src/js/ui.js"></script>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="animacoes.js"></script>
-
-<script>
-	window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-
 </html>

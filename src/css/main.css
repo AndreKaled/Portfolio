@@ -1,0 +1,497 @@
+:root {
+    --bg: #fafafa;
+    --card-bg: #ffffff;
+    --text: #111111;
+    --subtle: #666666;
+    --border: #eaeaea;
+    --accent: #0070f3;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Geist Sans', -apple-system, sans-serif;
+    margin: 0;
+    padding: 4rem 10%; /* Mais margem lateral para focar o conteúdo */
+    line-height: 1.5;
+}
+
+/* Header */
+.lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5rem;
+}
+
+.lab-header h1 { 
+    font-size: 2.2rem; /* Aumentado */
+    letter-spacing: -0.02em;
+    margin: 0; 
+    font-weight: 800; 
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--subtle);
+    margin-left: 2rem;
+    font-size: 1rem; /* Aumentado */
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+nav a:hover { color: var(--accent); }
+
+.status-pill {
+    font-size: 0.9rem; /* Aumentado */
+    color: var(--subtle);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+}
+
+.dot {
+    width: 10px; height: 10px;
+    background-color: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+/* Bento Grid */
+.bento-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 0.8fr; /* Ajuste leve nas proporções */
+    gap: 2rem;
+}
+
+/* Card Style */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2.5rem; /* Mais respiro interno */
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    border-color: #d1d1d1;
+}
+
+.label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.8rem; /* Aumentado */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--subtle);
+    margin-bottom: 2rem;
+    display: block;
+    opacity: 0.7;
+}
+
+/* Posicionamento */
+.profile-info { grid-column: span 2; }
+.tech-status { grid-column: span 1; }
+.featured-project { grid-column: span 2; }
+.lab-feed { grid-row: span 2; }
+
+/* Typography */
+.bio-text {
+    font-size: 2.4rem; /* IMPACTO: Similar ao do Kauan */
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0;
+    max-width: 100%;
+}
+
+.bio-text strong {
+    color: var(--accent);
+}
+
+.status-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.status-list li { margin-bottom: 1.2rem; }
+.status-list strong { 
+    color: var(--subtle); 
+    font-weight: 600; 
+    font-size: 0.75rem; 
+    text-transform: uppercase;
+    display: block; 
+    margin-bottom: 0.2rem;
+}
+.status-list span {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Featured Project */
+.featured-project h2 { 
+    margin: 0 0 1rem 0; 
+    font-size: 2.8rem; /* Aumentado para destaque total */
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.featured-project p {
+    font-size: 1.2rem;
+    color: var(--subtle);
+    margin: 0;
+}
+
+.tech-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 2rem 0; }
+.tech-tags span {
+    font-size: 0.8rem;
+    background: #f4f4f5;
+    color: #444;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: 'Geist Mono', monospace;
+}
+
+.btn-minimal {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    margin-top: auto;
+}
+
+/* GitHub Feed */
+.repo-item { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #f0f0f0; }
+.repo-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
+.repo-link { color: var(--text); text-decoration: none; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; }
+.repo-link:hover { color: var(--accent); }
+.repo-desc { font-size: 0.95rem; color: var(--subtle); margin-top: 0.5rem; line-height: 1.5; }
+.repo-lang { font-family: 'Geist Mono', monospace; font-size: 0.75rem; color: #aaa; margin-top: 0.8rem; display: block; }
+
+@media (max-width: 1100px) {
+    .bento-grid { grid-template-columns: 1fr 1fr; }
+    .lab-feed { grid-column: span 2; grid-row: auto; }
+}
+
+@media (max-width: 768px) {
+    body { padding: 2rem 5%; }
+    .bento-grid { grid-template-columns: 1fr; }
+    .profile-info, .tech-status, .featured-project, .lab-feed { grid-column: span 1; }
+    .bio-text { font-size: 1.8rem; }
+}
+
+/* Limitação de altura e scroll do feed */
+#github-feed {
+    max-height: 450px; /* Ajuste conforme preferir */
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Scrollbar minimalista para não poluir o design */
+#github-feed::-webkit-scrollbar {
+    width: 4px;
+}
+#github-feed::-webkit-scrollbar-track {
+    background: transparent;
+}
+#github-feed::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 10px;
+}
+
+/*********************/
+
+.lab-feed {
+    background: #1c1c1c !important; /* Fundo escuro */
+    border: 1px solid #333 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    position: relative;
+    color: #ffffff; /* Garante que o texto base seja branco */
+}
+
+/* Barra de título */
+.terminal-header {
+    background: #2d2d2d;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.terminal-buttons { display: flex; gap: 6px; }
+.term-dot { width: 10px; height: 10px; border-radius: 50%; }
+.term-dot.close { background: #ff5f56; }
+.term-dot.min { background: #ffbd2e; }
+.term-dot.max { background: #27c93f; }
+.terminal-title { color: #999; font-family: 'Geist Mono', monospace; font-size: 0.75rem; }
+
+/* Conteúdo Interno */
+#github-feed {
+    padding: 1.5rem;
+    max-height: 450px;
+    overflow-y: auto;
+    font-family: 'Geist Mono', monospace;
+}
+
+/* --- SEGMENTOS POWERLINE --- */
+.term-line { display: flex; align-items: center; font-size: 0.9rem; margin-bottom: 15px; }
+
+.segment {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px 2px 15px;
+    font-weight: bold;
+    color: #1c1c1c;
+    position: relative;
+}
+
+.seg-user { background: #87af5f; }
+.seg-path { background: #5f87af; color: #fff; }
+
+.segment::after {
+    content: "";
+    position: absolute;
+    right: -14px;
+    top: 0;
+    width: 15px;
+    height: 100%;
+    background: inherit;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    z-index: 1;
+}
+
+.segment + .segment { margin-left: 14px; }
+.term-cmd { margin-left: 20px; color: #fff; }
+
+/* --- REPOSITÓRIOS (CONTRASTE) --- */
+.lab-feed .repo-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #2d2d2d;
+}
+
+.lab-feed .repo-link {
+    color: #5f87af !important; /* Azul legível */
+    font-size: 1.1rem !important;
+    font-weight: bold !important;
+    text-decoration: none;
+}
+
+.lab-feed .repo-desc {
+    color: #c6c6c6 !important; /* Cinza claro para leitura */
+    font-size: 0.85rem !important;
+    margin-top: 5px !important;
+}
+
+.lab-feed .repo-lang {
+    color: #87af5f !important; /* Verde para combinar com o prompt */
+    font-size: 0.75rem !important;
+    display: block;
+    margin-top: 8px;
+}
+
+/* --- CURSOR ANIMADO --- */
+.cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background: #ffffff;
+    margin-left: 10px;
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Scrollbar dark */
+#github-feed::-webkit-scrollbar-thumb { background: #444; }
+
+.full-width {
+    grid-column: 1 / -1;
+    min-height: 80vh;
+}
+
+.event-line {
+    display: flex;
+    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.9rem;
+    align-items: center;
+}
+
+.event-date {
+    color: var(--subtle);
+    font-size: 0.75rem;
+    min-width: 150px;
+}
+
+.event-type {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Cores de Log de Sistema */
+.push { color: #87af5f; }   /* Verde */
+.create { color: #5f87af; } /* Azul */
+.star { color: #ff9d00; }   /* Laranja */
+.other { color: #666; }
+
+.event-content { margin: 0; color: var(--text); }
+.event-content strong { color: var(--accent); }
+
+[hidden] {
+    display: none !important;
+}
+
+.full-width {
+    min-height: 60vh;
+}
+
+/* Barra de Linguagens estilo Progress */
+.lang-progress-bar {
+    display: flex;
+    height: 10px;
+    background: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border: 1px solid #444;
+}
+
+.lang-segment {
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.lang-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    font-size: 0.7rem;
+    font-family: 'Geist Mono', monospace;
+}
+
+.lang-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #999;
+}
+
+.lang-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+/* Gráfico de atividade */
+.activity-graph img {
+    border-radius: 8px;
+    filter: grayscale(0.2);
+}
+
+/* Ajuste para o Badge do LeetCode */
+.leetcode-box {
+    margin-top: auto; /* Empurra para o final do card */
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.leetcode-box img {
+    transition: transform 0.3s ease;
+}
+
+.leetcode-box img:hover {
+    transform: scale(1.02); /* Um leve zoom ao passar o mouse */
+}
+
+.activity-graph img, 
+.matrix-container img, 
+.isometric-graph img {
+    display: block;
+    margin: 0 auto;
+    /* Ajuste de brilho para casar com o fundo do card */
+    filter: brightness(0.9) contrast(1.1);
+}
+
+/* Scroll horizontal caso o gráfico seja maior que a tela no mobile */
+.matrix-container {
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.card.compact {
+    padding: 1.5rem;
+    min-height: auto; /* Mata o min-height anterior */
+}
+
+/* Grid para organizar as métricas lado a lado na aba de Logs */
+.logs-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Garante que o gráfico de contribuições não estique o card */
+.matrix-container img {
+    max-height: 180px; /* Limita a altura do gráfico do GitHub */
+    width: auto;
+    max-width: 100%;
+}
+
+@media (max-width: 900px) {
+    .logs-stats-grid {
+        grid-template-columns: 1fr; /* Stack no mobile */
+    }
+}
+
+.lang-progress-bar {
+    display: flex;
+    height: 12px;
+    background: #2d2d2d;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+}
+
+.lang-segment {
+    height: 100%;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lang-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    font-size: 0.75rem;
+    font-family: 'Geist Mono', monospace;
+}
+
+.lang-legend-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    background: #252525;
+    border-radius: 4px;
+    border: 1px solid #b0b0b0;
+}
+
+.lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    margin-right: 8px;
+}

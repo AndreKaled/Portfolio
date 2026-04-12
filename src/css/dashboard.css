@@ -1,0 +1,72 @@
+.bento-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 0.8fr;
+    gap: 2rem;
+}
+
+.profile-info { grid-column: span 2; }
+.tech-status { grid-column: span 1; }
+.featured-project { grid-column: span 2; }
+
+/* Typography */
+.bio-text {
+    font-size: 2.4rem;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0;
+    max-width: 100%;
+}
+
+.bio-text strong { color: var(--accent); }
+
+.status-list { list-style: none; padding: 0; margin: 0; }
+.status-list li { margin-bottom: 1.2rem; }
+.status-list strong { 
+    color: var(--subtle); 
+    font-weight: 600; 
+    font-size: 0.75rem; 
+    text-transform: uppercase;
+    display: block; 
+    margin-bottom: 0.2rem;
+}
+.status-list span {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Featured Project */
+.featured-project h2 { 
+    margin: 0 0 1rem 0; 
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.featured-project p {
+    font-size: 1.2rem;
+    color: var(--subtle);
+    margin: 0;
+}
+
+.tech-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 2rem 0; }
+.tech-tags span {
+    font-size: 0.8rem;
+    background: #f4f4f5;
+    color: #444;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: 'Geist Mono', monospace;
+}
+
+@media (max-width: 1100px) {
+    .bento-grid { grid-template-columns: 1fr 1fr; }
+    .lab-feed { grid-column: span 2; grid-row: auto; }
+}
+
+@media (max-width: 768px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .profile-info, .tech-status, .featured-project, .lab-feed { grid-column: span 1; }
+    .bio-text { font-size: 1.8rem; }
+}
