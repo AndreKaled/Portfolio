@@ -1,10 +1,14 @@
-async function fetchWithCache(url, cacheKey, ttl = 600000) { // 10 min
+async function fetchWithCache(url, cacheKey, ttl = 600000) { // 10 min default
     const cached = localStorage.getItem(cacheKey);
     const now = new Date().getTime();
 
     if (cached) {
-        const { data, expiry } = JSON.parse(cached);
-        if (now < expiry) return data;
+        try{
+            const { data, expiry } = JSON.parse(cached);
+            if (now < expiry) return data;
+        }catch (e) {
+            localStorage.removeItem(cacheKey);
+        }
     }
 
     const response = await fetch(url);
@@ -25,15 +29,13 @@ async function fetchGitHubData() {
     if (!listContainer) return;
 
     try {
-        const response = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?type=all&sort=updated&direction=desc&per_page=6`);
-        if (!response.ok) throw new Error('ERR_CONNECTION_FAILED');
-        
-        const repos = await response.json();
+        const url = `https://api.github.com/users/${GITHUB_USER}/repos?type=all&sort=updated&direction=desc&per_page=6`;
+        const repos = await fetchWithCache(url, `repos_dashboard_${GITHUB_USER}`,1800000);
         
         const reposHTML = repos
             .filter(repo => !repo.fork)
             .map(repo => {
-                const desc = repo.description || "Projeto em desenvolvimento técnico.";
+                const desc = repo.description || "Projeto em desenvolvimento.";
                 const lang = repo.language && repo.language !== "Code" ? repo.language : "Logic";
                 
                 return `
@@ -61,10 +63,9 @@ async function fetchGitHubEvents() {
     if (!eventsContainer) return;
 
     try {
-        const response = await fetch(`https://api.github.com/users/${GITHUB_USER}/events/public?per_page=100`);
-        if (!response.ok) throw new Error('ERR_EVENTS_FETCH_FAILED');
-        
-        const events = await response.json();
+        const url = `https://api.github.com/users/${GITHUB_USER}/events/public?per_page=100`;        
+        const events = await fetchWithCache(url, `events_full_${GITHUB_USER}`,1800000);
+
         eventsContainer.innerHTML = '';
 
         // filtra eventos irrelevantes ou sem mensagens de commit reais
@@ -73,7 +74,6 @@ async function fetchGitHubEvents() {
                 const commits = event.payload.commits;
                 return commits && commits.length > 0 && commits[0].message.trim().length > 0;
             }
-            // Mantém interações como Create e Star
             return true; 
         });
 
@@ -134,17 +134,32 @@ async function fetchLanguageStats() {
     if (!bar || !legend) return;
 
     try {
-        const reposResponse = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=40`);
-        const repos = await reposResponse.json();
+        const url1 = `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=30`;
+        const url2 = `https://api.github.com/users/${GITHUB_USER}/events/public?per_page=50`;
+        const repos = await fetchWithCache(url1,`repos_data_${GITHUB_USER}`,1800000);
+
+        const events = await fetchWithCache(url2,`events_data_${GITHUB_USER}`,1800000);
 
         const langData = {};
         let totalBytes = 0;
+        
+        const languageUrls = new Set(repos.map(r => r.languages_url));
 
-        // mapeando as URLs de linguagens de cada repo
-        const langPromises = repos.map(repo => fetch(repo.languages_url).then(res => res.json()));
+        events.forEach(event => {
+            if (event.type === 'PushEvent' && event.repo) {
+                const url = `https://api.github.com/repos/${event.repo.name}/languages`;
+                languageUrls.add(url);
+            }
+        });
+
+        const langPromises = Array.from(languageUrls).map(url => {
+            const repoId = url.split('/').slice(-2, -1)[0];
+            return fetchWithCache(url,`lang_data_${repoId}`, 1800000)
+            .catch(() => ({}));
+        });
+        
         const results = await Promise.all(langPromises);
 
-        // agregamos os bytes
         results.forEach(data => {
             for (const [lang, bytes] of Object.entries(data)) {
                 langData[lang] = (langData[lang] || 0) + bytes;
@@ -152,30 +167,29 @@ async function fetchLanguageStats() {
             }
         });
 
-        // Cores padrão para as stacks
         const colors = {
-            'Java': '#b07219',
-            'Python': '#3572A5',
+            'Java': '#b07219', 
+            'Python': '#3572A5', 
             'C': '#555555',
-            'Kotlin': '#A97BFF',
-            'JavaScript': '#f1e05a',
+            'Kotlin': '#A97BFF', 
+            'JavaScript': '#f1e05a', 
             'HTML': '#e34c26',
-            'CSS': '#563d7c'
+            'CSS': '#563d7c', 
+            'C++': '#f34b7d', 
+            'Shell': '#89e051'
         };
 
         bar.innerHTML = '';
         legend.innerHTML = '';
 
-        // ordenando por volume de uso
         const sortedLangs = Object.entries(langData).sort((a, b) => b[1] - a[1]);
 
         sortedLangs.forEach(([lang, bytes]) => {
             const percentage = ((bytes / totalBytes) * 100).toFixed(1);
-            if (percentage < 0.5) return;
+            if (parseFloat(percentage) < 0.1) return;
 
             const color = colors[lang] || '#888';
 
-            // criar segmento da barra
             const segment = document.createElement('div');
             segment.className = 'lang-segment';
             segment.style.width = `${percentage}%`;
@@ -183,7 +197,6 @@ async function fetchLanguageStats() {
             segment.title = `${lang}: ${percentage}%`;
             bar.appendChild(segment);
 
-            // criar item da legenda
             const item = document.createElement('div');
             item.className = 'lang-legend-item';
             item.innerHTML = `

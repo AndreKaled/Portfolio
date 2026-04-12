@@ -7,6 +7,10 @@
     --accent: #0070f3;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--bg);
     color: var(--text);
@@ -90,4 +94,13 @@ nav a:hover { color: var(--accent); }
     color: var(--accent);
     text-decoration: none;
     margin-top: auto;
+}
+
+.contact-method strong {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--subtle);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-family: 'Geist Mono', monospace;
 }
