@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404: Fatal Error — Dev. André Kaled</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.min.css">
+    
+    <link rel="stylesheet" href="src/css/base.css">
+    <link rel="stylesheet" href="src/css/error.css">
+</head>
+<body>
+
+    <header class="lab-header">
+        <div class="header-info">
+            <h1>André Kaled</h1>
+            <p class="status-pill"><span class="dot status-error"></span> STATUS: ERROR_404</p>
+        </div>
+        <nav>
+            <a href="/">Projetos</a>
+            <a href="/#lab">Lab-Feed</a>
+        </nav>
+    </header>
+
+    <main class="error-container">
+        <section class="card terminal-error">
+            <div class="error-content">
+                <p class="error-code">[ 404: NOT_FOUND ]</p>
+                <p class="error-desc">
+                    Para de ser estranho seu esquisito >:( <br>
+                    Não existe rota para o lugar que tu pediu.
+                </p>
+                
+                <div class="stack-trace">
+                    <p>> stack_trace_dump:</p>
+                    <p>0x00000404 : REQUEST_URI_INVALID</p>
+                    <p>0x00000500 : RESOURCE_UNREACHABLE</p>
+                    <p>0x00000000 : KERNEL_HALT</p>
+                </div>
+
+                <a href="/" class="btn-minimal error-btn">
+                    Voltar ao caminho de pessoas normais
+                </a>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
