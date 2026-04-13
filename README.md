@@ -1,4 +1,4 @@
-![GitHub License](https://img.shields.io/github/license/AndreKaled/AndreKaled.github.io)
+![GitHub License](https://img.shields.io/github/license/AndreKaled/Portfolio)
 ![Vercel Deploy](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)
 # Portfólio — André Kaled
 Este projeto é o meu hub pessoal de projetos e telemetria de código. O objetivo foi criar uma interface limpa e funcional que centraliza minhas atividades acadêmicas na UFAM, projetos que fiz/faço/estou fazendo (muitos em fazendo) e histórico de contribuições no GitHub.
