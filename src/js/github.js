@@ -1,25 +1,34 @@
-async function fetchWithCache(url, cacheKey, ttl = 600000) { // 10 min default
+async function fetchWithCache(url, cacheKey, ttl = 600000) {
     const cached = localStorage.getItem(cacheKey);
-    const now = new Date().getTime();
+    const now = Date.now();
 
     if (cached) {
-        try{
+        try {
             const { data, expiry } = JSON.parse(cached);
-            if (now < expiry) return data;
-        }catch (e) {
+
+            if (now < expiry) {
+                return data;
+            }
+        } catch (e) {
             localStorage.removeItem(cacheKey);
         }
     }
 
-    const response = await fetch(url, {
-        headers: {
-            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
-        }
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const response = await fetch(
+        `/api/github?url=${encodeURIComponent(url)}`
+    );
+
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+    }
+
     const data = await response.json();
 
-    localStorage.setItem(cacheKey, JSON.stringify({ data, expiry: now + ttl }));
+    localStorage.setItem(cacheKey, JSON.stringify({
+        data,
+        expiry: now + ttl
+    }));
+
     return data;
 }
 
@@ -125,35 +134,37 @@ async function fetchGitHubEvents() {
 
             switch(event.type) {
                 case 'PushEvent':
+                    const commits = event.payload.commits || [];
                     const repoName = event.repo.name.split('/')[1];
-                    const branch = event.payload.ref
-                        ? event.payload.ref.replace('refs/heads/', '')
-                        : 'main';
 
                     let commitMsg = null;
-                    let commitCount = 0;
 
-                    try {
-                        const commitsData = await fetchWithCache(
-                            `https://api.github.com/repos/${event.repo.name}/commits?sha=${branch}&per_page=5`,
-                            `commits_${event.repo.name}_${branch}`,
-                            300000
-                        );
+                    const relevantCommit = commits.find(commit =>
+                        commit.message &&
+                        !isLowQualityCommit(commit.message)
+                    );
 
-                        console.log(commitsData);
+                    if (relevantCommit) {
+                        commitMsg = relevantCommit.message.split('\n')[0];
+                    }
 
-                        commitCount = commitsData.length;
+                    if (!commitMsg && event.payload.head) {
+                        try {
+                            const commitData = await fetchWithCache(
+                                `https://api.github.com/repos/${event.repo.name}/commits/${event.payload.head}`,
+                                `commit_${event.payload.head}`,
+                                1800000
+                            );
 
-                        const relevantCommit = commitsData.find(commit =>
-                            commit.commit?.message &&
-                            !isLowQualityCommit(commit.commit.message)
-                        );
-
-                        if (relevantCommit) {
-                            commitMsg = relevantCommit.commit.message.split('\n')[0];
+                            if (
+                                commitData.commit?.message &&
+                                !isLowQualityCommit(commitData.commit.message)
+                            ) {
+                                commitMsg = commitData.commit.message.split('\n')[0];
+                            }
+                        } catch (e) {
+                            console.error('Erro ao buscar commit específico:', e);
                         }
-                    } catch (e) {
-                        console.error('Erro ao buscar commits:', e);
                     }
 
                     if (!commitMsg) {
@@ -161,6 +172,7 @@ async function fetchGitHubEvents() {
                     }
 
                     const commitInfo = classifyCommit(commitMsg);
+                    const commitCount = commits.length;
 
                     let multiCommitText = '';
                     if (commitCount > 1) {
@@ -174,7 +186,6 @@ async function fetchGitHubEvents() {
                         ${multiCommitText}
                     `;
                     break;
-
                 case 'CreateEvent':
                     actionText = `
                         <span class="event-type create">[CREATE]</span>
@@ -317,6 +328,4 @@ async function fetchLanguageStats() {
 // Inicializa o Dashboard no load
 document.addEventListener('DOMContentLoaded', () => {
     fetchGitHubData();
-    fetchGitHubEvents();
-    fetchLanguageStats();
 });
