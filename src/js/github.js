@@ -11,7 +11,11 @@ async function fetchWithCache(url, cacheKey, ttl = 600000) { // 10 min default
         }
     }
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
+        }
+    });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
 
@@ -55,6 +59,43 @@ async function fetchGitHubData() {
     }
 }
 
+function classifyCommit(message) {
+    const msg = message.toLowerCase();
+
+    if (msg.includes('feat:') || msg.includes('feature:')) {
+        return { tag: '[FEATURE]', className: 'feature' };
+    }
+    else if (msg.includes('fix:') || msg.includes('bug:')) {
+        return { tag: '[FIX]', className: 'fix' };
+    }
+    else if (msg.includes('refactor:')) {
+        return { tag: '[REFACTOR]', className: 'refactor' };
+    }
+    else if (msg.includes('docs:') || msg.includes('doc:')) {
+        return { tag: '[DOC]', className: 'doc' };
+    }
+    else if (msg.includes('merge')) {
+        return { tag: '[MERGE]', className: 'merge' };
+    }
+    else {
+        return { tag: '[UPDATE]', className: 'default' };
+    }
+}
+
+function isLowQualityCommit(message) {
+    const msg = message.trim().toLowerCase();
+
+    const ignoredMessages = [
+        '.',
+        'teste',
+        'test',
+        'aaa',
+        'wip'
+    ];
+
+    return ignoredMessages.includes(msg) || msg.length <= 3;
+}
+
 /**
  * Renderiza o Log de Eventos na aba System Logs
  */
@@ -70,39 +111,94 @@ async function fetchGitHubEvents() {
 
         // filtra eventos irrelevantes ou sem mensagens de commit reais
         const filteredEvents = events.filter(event => {
-            if (event.type === 'PushEvent') {
-                const commits = event.payload.commits;
-                if (commits && commits.length > 0) {
-                    return commits[0].message.trim().length > 0;
-                }
-                return true;
-            }
-            return true; 
+            return [
+                'PushEvent',
+                'CreateEvent',
+                'WatchEvent',
+                'IssuesEvent'
+            ].includes(event.type);
         });
 
-        filteredEvents.slice(0, 50).forEach(event => {
+        for (const event of filteredEvents.slice(0, 50)) {
             const date = new Date(event.created_at).toLocaleString('pt-BR');
             let actionText = '';
-            
+
             switch(event.type) {
                 case 'PushEvent':
-                    const commits = event.payload.commits;
-                    const headHash = event.payload.head ? event.payload.head.substring(0, 7) : 'unknown';
-                    
-                    const commitMsg = (commits && commits.length > 0) 
-                        ? commits[0].message 
-                        : `Pushed new changes [head: ${headHash}]`;
-                    
-                    actionText = `<span class="event-type push">[PUSH]</span> ${commitMsg} in <strong>${event.repo.name}</strong>`;
+                    const repoName = event.repo.name.split('/')[1];
+                    const branch = event.payload.ref
+                        ? event.payload.ref.replace('refs/heads/', '')
+                        : 'main';
+
+                    let commitMsg = null;
+                    let commitCount = 0;
+
+                    try {
+                        const commitsData = await fetchWithCache(
+                            `https://api.github.com/repos/${event.repo.name}/commits?sha=${branch}&per_page=5`,
+                            `commits_${event.repo.name}_${branch}`,
+                            300000
+                        );
+
+                        console.log(commitsData);
+
+                        commitCount = commitsData.length;
+
+                        const relevantCommit = commitsData.find(commit =>
+                            commit.commit?.message &&
+                            !isLowQualityCommit(commit.commit.message)
+                        );
+
+                        if (relevantCommit) {
+                            commitMsg = relevantCommit.commit.message.split('\n')[0];
+                        }
+                    } catch (e) {
+                        console.error('Erro ao buscar commits:', e);
+                    }
+
+                    if (!commitMsg) {
+                        commitMsg = `Push realizado em ${repoName}`;
+                    }
+
+                    const commitInfo = classifyCommit(commitMsg);
+
+                    let multiCommitText = '';
+                    if (commitCount > 1) {
+                        multiCommitText = ` <span class="commit-count">(+${commitCount - 1} commits)</span>`;
+                    }
+
+                    actionText = `
+                        <span class="event-type ${commitInfo.className}">${commitInfo.tag}</span>
+                        ${commitMsg}
+                        in <strong>${repoName}</strong>
+                        ${multiCommitText}
+                    `;
                     break;
+
                 case 'CreateEvent':
-                    actionText = `<span class="event-type create">[CREATE]</span> New ${event.payload.ref_type}: <strong>${event.repo.name}</strong>`;
+                    actionText = `
+                        <span class="event-type create">[CREATE]</span>
+                        New ${event.payload.ref_type}: <strong>${event.repo.name}</strong>
+                    `;
                     break;
+
                 case 'WatchEvent':
-                    actionText = `<span class="event-type star">[STAR]</span> Starred <strong>${event.repo.name}</strong>`;
+                    actionText = `
+                        <span class="event-type star">[STAR]</span>
+                        Starred <strong>${event.repo.name}</strong>
+                    `;
                     break;
-                default:
-                    actionText = `<span class="event-type other">[EVENT]</span> Interaction with <strong>${event.repo.name}</strong>`;
+
+                case 'IssuesEvent':
+                    const action = event.payload.action;
+                    const issue = event.payload.issue;
+
+                    actionText = `
+                        <span class="event-type issue">[ISSUE]</span>
+                        ${action} issue: <strong>${issue.title}</strong>
+                        in <strong>${event.repo.name.split('/')[1]}</strong>
+                    `;
+                    break;
             }
 
             const eventLine = document.createElement('div');
@@ -111,8 +207,9 @@ async function fetchGitHubEvents() {
                 <span class="event-date">${date}</span>
                 <p class="event-content">${actionText}</p>
             `;
+
             eventsContainer.appendChild(eventLine);
-        });
+        };
 
         // sinalizador de fim de log se a lista for menor que o esperado
         if (filteredEvents.length > 0) {
@@ -218,4 +315,8 @@ async function fetchLanguageStats() {
 }
 
 // Inicializa o Dashboard no load
-document.addEventListener('DOMContentLoaded', fetchGitHubData);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchGitHubData();
+    fetchGitHubEvents();
+    fetchLanguageStats();
+});

@@ -47,3 +47,24 @@
 @media (max-width: 900px) {
     .logs-stats-grid { grid-template-columns: 1fr; }
 }
+
+/* Github push events */
+.event-type.fix { color: #ff6b6b; }
+.event-type.feature { color: #51cf66; }
+.event-type.refactor { color: #74c0fc; }
+.event-type.doc { color: #fcc419; }
+.event-type.merge { color: #b197fc; }
+.event-type.default { color: #adb5bd; }
+
+.event-type.issue { color: #f783ac; }
+
+.repo-highlight {
+    color: #ff922b;
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+.commit-count {
+    opacity: 0.6;
+    font-size: 0.85rem;
+}
